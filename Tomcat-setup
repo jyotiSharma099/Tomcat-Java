@@ -1,0 +1,41 @@
+########################################################
+
+## Java Installation ##
+
+sudo apt update -y 
+sudo apt install default-jre -y
+java --version
+
+############################################################
+
+## Tomcat Installation ##
+
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz
+tar -xvf apache-tomcat-9.0.85.tar.gz
+sudo cp -R apache-tomcat-9.0.85 tomcat
+sudo mv tomcat /usr/local/
+sudo su
+cd /usr/local/tomcat/conf
+sudo vim tomcat-users.xml
+#add this line in last 
+
+<user username="admin" password="admin" roles="manager-gui"/>
+
+cd /usr/local/tomcat/webapps/manager/META-INF
+#allow all ip address
+sudo vim context.xml
+#remove this line <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+#ADD this line 
+
+<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow=".*" />
+
+cd /usr/local/tomcat/bin
+
+./catalina.sh start
+
+#Search ip:8080 in Browser and test that its working then click on ManagerAPPs
+Then add username and password and deploy helloworld.war file 
+
+####################################### DONE #########################################
